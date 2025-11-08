@@ -1,0 +1,23 @@
+# Python environment
+backend/__pycache__/
+backend/*.pyc
+backend/my_env/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+
+# Flask temp image folders
+backend/src/temp/*.png
+
+# Node modules and build files
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/.env
+
+# VS Code & system files
+.vscode/
+.DS_Store
+Thumbs.db

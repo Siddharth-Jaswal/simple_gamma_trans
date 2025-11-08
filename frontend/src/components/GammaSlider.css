@@ -1,0 +1,7 @@
+#photo{
+    display: none;
+}
+
+.photo-container img {
+  transition: all 0.3s ease-in-out;
+}
