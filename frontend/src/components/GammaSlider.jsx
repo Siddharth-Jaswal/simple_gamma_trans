@@ -16,7 +16,7 @@ export default function GammaSlider() {
     const { name, value } = e.target;
     setConfig((oldConfig) => ({
       ...oldConfig,
-      [name]: value,
+      [name]: name === "gamma" || name === "height" || name === "width" ? Number(value) : value,
     }));
   };
 
@@ -34,7 +34,7 @@ export default function GammaSlider() {
     const timeout = setTimeout(async () => {
       try {
         const imgUrl = await applyGammaTransform(file, config.gamma);
-        setImage(imgUrl);
+        if (imgUrl) setImage(imgUrl);
       } catch (err) {
         console.log(`Error at useEffect@GammaSlider.jsx: ${err}`);
       }
@@ -42,6 +42,15 @@ export default function GammaSlider() {
 
     return () => clearTimeout(timeout);
   }, [config.gamma]);
+
+  // Revoke previous blob URL to avoid stale/cached images and memory leaks
+  useEffect(() => {
+    return () => {
+      if (image && typeof image === "string" && image.startsWith("blob:")) {
+        try { URL.revokeObjectURL(image); } catch (_) {}
+      }
+    };
+  }, [image]);
 
   const openFileDialog = () => {
     document.getElementById("photo").click();
